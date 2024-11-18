@@ -5,18 +5,16 @@ export interface Register {
   name: string;
   userId: string;
 }
-
-export interface Login {
-  name: string;
-  email: string;
-  password: string;
+//pick chọn các thuộc tính
+export interface Login extends Pick<Register, "name" | "email" | "password"> {}
+//Omit là bỏ cái huộc tính
+export interface User extends Omit<Register, "password"> {
+  _id: string;
+  avatar?: string;
 }
 
-export interface User {
-  _id: string;
-  name: string;
-  email: string;
-  userId: string | number;
+export interface UserId extends Omit<User, "email" | "password" | "_id"> {
+  id: string;
   avatar?: string;
 }
 
@@ -61,12 +59,6 @@ export interface Group {
   avatar: string;
   coverimage: string;
   statusJoin: boolean;
-}
-export interface UserId {
-  userId: number;
-  avatar: string;
-  id: number;
-  name: string;
 }
 
 export interface Message {
