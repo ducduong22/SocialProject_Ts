@@ -52,7 +52,6 @@ export interface Comment {
   id: string | number;
 }
 export interface Group {
-  slice(arg0: number, arg1: number): unknown;
   GroupId: number;
   id: number | number;
   name: string;
@@ -82,7 +81,4 @@ export interface CommentState {
 }
 export interface GroupState {
   group: Group;
-}
-export interface JoinState {
-  [key: string]: boolean;
 }
