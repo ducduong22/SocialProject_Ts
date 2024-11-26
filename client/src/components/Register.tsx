@@ -15,14 +15,12 @@ const Register: React.FC = () => {
   });
   const [confirmPassword, setConfirmPassword] = useState<string>("");
   const [status, setStatus] = useState<"success" | "failure" | "">("");
-
-  const dispatch = useDispatch(); // No typing applied here
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (user.password === confirmPassword) {
-      dispatch(registerRequest(user)); // Dispatching the action
+      dispatch(registerRequest(user));
       navigate("/login");
     } else {
       alert("Passwords do not match");

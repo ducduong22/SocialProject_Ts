@@ -4,7 +4,6 @@ import HomPage from "./components/Hompage";
 import Register from "./components/Register";
 import ProfilePage from "./components/ProfilePage";
 import FriendsDetail from "./components/FriendsDetail";
-import Comment from "./components/Comment";
 
 import {
   createBrowserRouter,
@@ -34,10 +33,7 @@ const router = createBrowserRouter([
     path: "/user/:userId",
     element: <FriendsDetail />,
   },
-  {
-    path: "/post/:id/comments",
-    element: <Comment />,
-  },
+
   {
     path: "/*",
     element: <Navigate to="/login" />,

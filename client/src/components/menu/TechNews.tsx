@@ -1,18 +1,23 @@
 import { useSelector, useDispatch } from "react-redux";
 import { HeartFilled } from "@ant-design/icons";
 import { useEffect, useState } from "react";
-
 import { Technew, setTechNew } from "../../store/menu/TechNewsSlice";
-
+import { Posts, ToggleLike } from "@/container/type";
 const TechNew = () => {
   const dispatch = useDispatch();
 
   const technew = useSelector(Technew);
   console.log(technew);
   const [likeStatus, setLikeStatus] = useState(
-    technew.reduce((acc, tech) => ({ ...acc, [tech.id]: tech.handlelike }), {})
+    technew?.reduce(
+      (acc, tech) => ({
+        ...acc,
+        [tech.id]: tech.handlelike,
+      }),
+      {}
+    )
   );
-  const handleLikeClick = (postId) => {
+  const handleLikeClick = (postId: number | string) => {
     setLikeStatus((Status) => {
       const newLikeStatus = {
         ...Status,
@@ -32,7 +37,7 @@ const TechNew = () => {
 
   return (
     <div>
-      {technew.length > 0 ? (
+      {technew?.length > 0 ? (
         technew.map((tech) => {
           return (
             <div key={tech.id}>

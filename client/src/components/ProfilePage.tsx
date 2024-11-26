@@ -57,7 +57,6 @@ const ProfilePage = () => {
 
     const updatedPost = updatedPosts.find((post) => post.id === postId);
     const newLikes = updatedPost?.likes;
-
     try {
       await axios.put(
         `https://66b0f7e16a693a95b53ad5a2.mockapi.io/Post/${postId}`,
@@ -74,7 +73,10 @@ const ProfilePage = () => {
     dispatch(setPosts());
   }, [dispatch]);
 
-  const userPosts = posts.filter((post) => post.userId === user._id);
+  const userPosts = posts.filter((post) => post.userId == String(user._id));
+  console.log(userPosts);
+  console.log("user nè ", user);
+  console.log("post nè", posts);
 
   const renderDatePost = (datepost: string) => {
     const postDate = parseISO(datepost);

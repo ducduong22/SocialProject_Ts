@@ -2,16 +2,22 @@ import { useSelector, useDispatch } from "react-redux";
 import { HeartFilled } from "@ant-design/icons";
 import { useEffect, useState } from "react";
 import { Arti, setArtificial } from "../../store/menu/ArtificialSlice";
-
+import { RootState } from "@/store/configureStore";
+import { Posts, ToggleLike } from "@/container/type";
 const ArtificialIntelligence = () => {
   const dispatch = useDispatch();
-
   const arti = useSelector(Arti);
   console.log(arti);
-  const [likeStatus, setLikeStatus] = useState(
-    arti.reduce((acc, tech) => ({ ...acc, [tech.id]: tech.handlelike }), {})
+  const [likeStatus, setLikeStatus] = useState<Posts>(
+    arti.reduce(
+      (acc: ToggleLike, tech: Posts) => ({
+        ...acc,
+        [tech.id]: tech.handlelike,
+      }),
+      {}
+    )
   );
-  const handleLikeClick = (postId) => {
+  const handleLikeClick = (postId: number | string) => {
     setLikeStatus((Status) => {
       const newLikeStatus = {
         ...Status,

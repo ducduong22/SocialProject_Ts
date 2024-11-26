@@ -1,3 +1,6 @@
+import axios from "axios";
+import { Posts, Comment } from "@/container/type";
+// Import các mock data
 import {
   mockPost,
   mockGroup,
@@ -8,75 +11,93 @@ import {
   mockUser,
 } from "./mocks";
 
-import axios from "axios";
+// Định nghĩa API URL
 const apiUrl = {
   getPosts: "https://66b0f7e16a693a95b53ad5a2.mockapi.io/Post",
   getComment: "https://66b0f7e16a693a95b53ad5a2.mockapi.io",
-  getPostDetail: (id) => `https://jsonplaceholder.typicode.com/posts/${id}`,
+  getPostDetail: (id: number) =>
+    `https://jsonplaceholder.typicode.com/posts/${id}`,
   getGroup: "https://example.com/comments",
 };
 
-export const getPost = async () => {
+// Kiểu dữ liệu Post
+
+// Lấy danh sách bài viết
+export const getPost = async (): Promise<Posts[]> => {
   const posts = await axios.get(apiUrl.getPosts);
-  console.log(posts);
   return posts.data;
 };
 
-export const addPost = async (post) => {
+// Thêm bài viết mới
+export const addPost = async (post: Omit<Posts, "id">): Promise<Posts> => {
   const response = await axios.post(apiUrl.getPosts, post);
   return response.data;
 };
 
-export const deletePost = async (id) => {
+// Xóa bài viết
+export const deletePost = async (id: number): Promise<void> => {
   await axios.delete(`${apiUrl.getPosts}/${id}`);
 };
 
-export const addComment = (newComment) => {
+// Thêm bình luận
+export const addComment = (
+  newComment: Omit<Comment, "id">
+): Promise<Comment> => {
   return axios.post(`${apiUrl.getComment}/comments`, newComment);
 };
 
-export const getComments = () => {
+// Lấy danh sách bình luận
+export const getComments = (): Promise<Comment[]> => {
   return axios.get(`${apiUrl.getComment}/comments`);
 };
 
-export const deleteComment = async (commentId) => {
+// Xóa bình luận
+export const deleteComment = async (commentId: number): Promise<void> => {
   return axios.delete(`${apiUrl.getComment}/comments/${commentId}`);
 };
 
-export const getUserId = async () => {
+// Lấy mock user ID
+export const getUserId = async (): Promise<typeof mockUser> => {
   return mockUser;
 };
 
-export const getThreePrinting = async () => {
+// Lấy dữ liệu 3D Printing
+export const getThreePrinting = async (): Promise<typeof mock3DPrinting> => {
   return mock3DPrinting;
 };
 
-export const getArtificial = async () => {
+// Lấy dữ liệu Artificial Intelligence
+export const getArtificial = async (): Promise<typeof mockArtificial> => {
   return mockArtificial;
 };
 
-export const getProgramming = async () => {
+// Lấy dữ liệu Programming
+export const getProgramming = async (): Promise<typeof mockProgramming> => {
   return mockProgramming;
 };
 
-export const getTechNews = async () => {
+// Lấy dữ liệu Tech News
+export const getTechNews = async (): Promise<typeof mockTechNews> => {
   return mockTechNews;
 };
 
-export const getGroup = async () => {
+// Lấy dữ liệu Group
+export const getGroup = async (): Promise<typeof mockGroup> => {
   return mockGroup;
 };
 
-export const getPostDetailAPI = async (userId) => {
-  const postdetail = mockPost.find((p) => p.id === Number(userId));
-  //Tại sao cần chuyển đổi postId thành số?:
-  // Nếu id được lấy từ URL hoặc nguồn chuỗi khác, nó ban đầu là chuỗi.http://localhost:5173/fren/1 => trong code post.id nó lấy được id = nhưng chạy data nó ko trùng với mockpost là id = 1
-  // Các id trong dữ liệu mockPost là số, vì vậy bạn cần chuyển đổi postId từ chuỗi thành số để so sánh chính xác.
-  console.log("ID tìm kiếm:", userId);
-  if (!postdetail) {
-    throw new Error("Post not found");
-  }
-  console.log(postdetail);
-  return postdetail;
-};
+// // Lấy chi tiết bài viết
+// export const getPostDetailAPI = async (userId: string): Promise<Posts> => {
+//   const postdetail = mockPost.find((p) => p.id === Number(userId));
+
+//   console.log("ID tìm kiếm:", userId);
+
+//   if (!postdetail) {
+//     throw new Error("Post not found");
+//   }
+
+//   console.log(postdetail);
+//   return postdetail;
+// };
+
 export default apiUrl;

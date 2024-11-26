@@ -1,9 +1,8 @@
-import Comment from "../components/Comment";
 export interface Register {
   email: string;
   password: string;
   name: string;
-  userId: string;
+  userId: number;
 }
 //pick chọn các thuộc tính
 export interface Login extends Pick<Register, "name" | "email" | "password"> {}
@@ -32,11 +31,46 @@ export interface Posts {
   img: string;
   body: string;
   likes: number;
-  handlelike: false;
+  handlelike: boolean;
   comment: number;
   share: number;
   friendstatus: boolean;
 }
+
+export interface postData {
+  userId: string;
+  avatar: string;
+  name: string;
+  comment: number;
+  share: number;
+  likes: number;
+  datepost: string;
+}
+
+// menu
+export interface ArtificialData extends Omit<Posts, "friendstatus"> {
+  category: string;
+}
+export interface ThreeDPrinting {
+  id: number;
+  name: string;
+  title: string;
+  userid: number;
+  avatar: string;
+  body: string;
+  category: string;
+  likes: string;
+  handlelike: boolean;
+  comment: string;
+  share: string;
+}
+export interface Programming extends Omit<Posts, "friendstatus"> {
+  category: string;
+}
+export interface TechNews extends Omit<Posts, "friendstatus"> {
+  category: string;
+}
+
 export interface ToggleLike {
   postId: string;
   increment: boolean;
@@ -49,8 +83,9 @@ export interface Comment {
   likes: number;
   comment: number;
   avatar: string;
-  id: string | number;
+  id: number;
 }
+
 export interface Group {
   GroupId: number;
   id: number | number;
@@ -67,18 +102,7 @@ export interface Message {
   content: string;
   createdAt: string;
 }
-export interface UserState {
-  user: User;
-}
-export interface UserIdState {
-  userId: UserId;
-}
-export interface PostState {
-  post: Posts;
-}
-export interface CommentState {
-  comment: Comment;
-}
-export interface GroupState {
-  group: Group;
+export interface ChatBoxListProps {
+  senderId: string;
+  receiverId: string;
 }

@@ -6,17 +6,23 @@ import Header from "./Header";
 import { HeartFilled } from "@ant-design/icons";
 import { mockComments } from "../store/mocks";
 import { setPosts } from "../store/post/postSlice";
+import axios from "axios";
+import { RootState } from "@/store/configureStore";
+import { updatePosts } from "../store/post/postSlice";
+
 const PostDetail = () => {
-  const { userId } = useParams();
+  const { userId } = useParams<{ userId: string }>();
   const dispatch = useDispatch();
-  const [activePostId, setActivePostId] = useState(null);
-  const getUserIds = useSelector((state) => state.userId.userID);
-  const user = useSelector((state) => state.user.user);
-  const posts = useSelector((state) => state.post.posts);
-  const userPosts = posts.filter((post) => post.userId === parseInt(userId));
-  const getUserId = getUserIds.filter((u) => u.userId === parseInt(userId));
+  const [activePostId, setActivePostId] = useState<string | number | null>(
+    null
+  );
+  const getUserIds = useSelector((state: RootState) => state.userId.userID);
+  const user = useSelector((state: RootState) => state.user.user);
+  const posts = useSelector((state: RootState) => state.post.posts);
+  const userPosts = posts.filter((post) => post.userId === Number(userId));
+  const getUserId = getUserIds.filter((u) => u.userId === Number(userId));
   const [showFriends, setShowFriends] = useState(false);
-  const [likedPosts, setLikedPosts] = useState({});
+  const [likedPosts, setLikedPosts] = useState<Record<string, boolean>>({});
   const [likeStatus, setLikeStatus] = useState(
     posts.reduce((acc, post) => ({ ...acc, [post.id]: post.handlelike }), {})
   );
@@ -25,32 +31,32 @@ const PostDetail = () => {
     setActivePostId((prevPostId) => (prevPostId === postId ? null : postId));
   };
 
-  const handleLikeClick = (postId) => {
-    setLikeStatus((Status) => {
-      const newLikeStatus = {
-        ...Status,
-        [postId]: !Status[postId],
-      };
-      console.log(
-        `Like status for post with id ${postId}:`,
-        newLikeStatus[postId]
-      );
-      return newLikeStatus;
+  const handleLikeClick = async (postId: number | string) => {
+    const updatedPosts = posts.map((post) => {
+      if (post.id === postId) {
+        const updatedLikes = post.likes + (post.likes % 2 === 0 ? 1 : -1);
+        return {
+          ...post,
+          likes: updatedLikes,
+        };
+      }
+      return post;
     });
-    setPosts((prevPosts) =>
-      prevPosts.map((post) =>
-        post.id === postId
-          ? {
-              ...post,
-              likes: likedPosts[postId] ? post.likes - 1 : post.likes + 1,
-            }
-          : post
-      )
-    );
-    setLikedPosts((prevStatus) => ({
-      ...prevStatus,
-      [postId]: !prevStatus[postId],
-    }));
+    dispatch(updatePosts(updatedPosts));
+
+    const updatedPost = updatedPosts.find((post) => post.id === postId);
+    const newLikes = updatedPost?.likes;
+
+    try {
+      await axios.put(
+        `https://66b0f7e16a693a95b53ad5a2.mockapi.io/Post/${postId}`,
+        {
+          likes: newLikes,
+        }
+      );
+    } catch (error) {
+      console.error("Error updating data on the server", error);
+    }
   };
 
   useEffect(() => {
@@ -66,7 +72,7 @@ const PostDetail = () => {
     posts.reduce((acc, fren) => ({ ...acc, [fren.id]: fren.friendstatus }), {})
   );
 
-  const handleSelectFren = (id) => {
+  const handleSelectFren = (id: string) => {
     setfren((prevAdd) => {
       const updatedAdd = { ...prevAdd, [id]: !prevAdd[id] };
       console.log(`add ID ${id} add status:`, updatedAdd[id]);

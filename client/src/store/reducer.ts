@@ -5,8 +5,8 @@ import postReducer from "./post/postSlice";
 import searchReducer from "../store/post/postSlice";
 import commentReducer from "./comment/commentSlice";
 import userIdReducer from "./post/userIdSlice";
-import printingReducer from "../store/menu/ThreeDPrintingSlice";
-import programmingReducer from "../store/menu/ProgrammingSlice";
+import printingReducer from "./menu/ThreeDPrintingSlice";
+import programmingReducer from "./menu/ProgrammingSlice";
 import technewReducer from "../store/menu/TechNewsSlice";
 import artificialReducer from "../store/menu/ArtificialSlice";
 const rootReducer = combineReducers({

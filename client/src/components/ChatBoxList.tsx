@@ -2,12 +2,7 @@ import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import { RootState } from "@/store/configureStore";
-import { Message } from "@/container/type";
-
-interface ChatBoxListProps {
-  senderId: string;
-  receiverId: string;
-}
+import { Message, ChatBoxListProps } from "@/container/type";
 
 const ChatBoxList: React.FC<ChatBoxListProps> = ({ senderId, receiverId }) => {
   const [messages, setMessages] = useState<Message[]>([]);

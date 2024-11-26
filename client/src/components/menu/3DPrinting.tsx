@@ -1,16 +1,25 @@
 import { useSelector, useDispatch } from "react-redux";
 import { HeartFilled } from "@ant-design/icons";
 import { useEffect, useState } from "react";
-import { Prin, setPrinting } from "../../store/menu/ThreeDPrintingSlice";
+import { setPrinting } from "../../store/menu/ThreeDPrintingSlice";
+import { RootState } from "@/store/configureStore";
+import { Posts, ToggleLike } from "@/container/type";
+
 const ThreeDPrinting = () => {
   const dispatch = useDispatch();
-  const search = useSelector((state) => state.search.search);
-  const prin = useSelector(Prin);
+  const search = useSelector((state: RootState) => state.search.search);
+  const prin = useSelector((state: RootState) => state.printing.printing);
   console.log("2", prin);
   const [likeStatus, setLikeStatus] = useState(
-    prin.reduce((acc, tech) => ({ ...acc, [tech.id]: tech.handlelike }), {})
+    prin?.reduce(
+      (acc, tech) => ({
+        ...acc,
+        [tech.id]: tech.handlelike,
+      }),
+      {}
+    )
   );
-  const handleLikeClick = (postId) => {
+  const handleLikeClick = (postId: number | string) => {
     setLikeStatus((Status) => {
       const newLikeStatus = {
         ...Status,
@@ -24,13 +33,13 @@ const ThreeDPrinting = () => {
     });
   };
   const searchs = (prin) => {
-    return prin.filter(
+    return prin?.filter(
       (tech) =>
         tech.name.toLowerCase().includes(search.toLowerCase()) ||
         tech.body.toLowerCase().includes(search.toLowerCase())
     );
   };
-  console.log("A", searchs);
+
   const filtered = searchs(prin);
   useEffect(() => {
     dispatch(setPrinting());
@@ -38,7 +47,7 @@ const ThreeDPrinting = () => {
 
   return (
     <div>
-      {filtered.length > 0 ? (
+      {filtered?.length > 0 ? (
         filtered.map((tech) => {
           return (
             <div key={tech.id}>

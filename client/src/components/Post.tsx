@@ -46,7 +46,9 @@ const Post = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const user = useSelector((state: RootState) => state.user.user);
   const dispatch = useDispatch();
-  const [activePostId, setActivePostId] = useState(null);
+  const [activePostId, setActivePostId] = useState<string | number | null>(
+    null
+  );
   const posts = useSelector((state: RootState) => state.post.posts);
   const search = useSelector((state: RootState) => state.search.search);
   const comments = useSelector((state: RootState) => state.comment.comments);
@@ -59,7 +61,7 @@ const Post = () => {
     body: "",
     postId: null,
   });
-  console.log(activePostId);
+  // console.log(activePostId);
   const [likedPosts, setLikedPosts] = useState<{ [key: string]: boolean }>({});
   const addPost = () => {
     if (newPost.body.trim()) {
@@ -80,22 +82,18 @@ const Post = () => {
     }
   };
 
-  const deletePost = (id) => {
+  const deletePost = (id: string | number) => {
     dispatch(deletePostRequest(id));
   };
   const renderDatePost = (datepost: string | undefined): string => {
     if (!datepost) {
-      return ""; // hoặc một giá trị mặc định nếu `datepost` không hợp lệ
+      return "";
     }
-
     const postDate = parseISO(datepost);
-
     if (!isValid(postDate)) {
       return "";
     }
-
     const currentTime = new Date();
-
     if (differenceInHours(currentTime, postDate) < 24) {
       const distanceString = formatDistanceToNow(postDate, {
         addSuffix: true,
@@ -107,7 +105,6 @@ const Post = () => {
       return format(postDate, "dd/MM/yyyy", { locale: enUS });
     }
   };
-
   const handleCommentSubmit = () => {
     if (newComment.body.trim() && newComment.postId !== null) {
       const commentToSubmit = {
@@ -122,8 +119,7 @@ const Post = () => {
       setNewComment({ ...newComment, body: "", postId: null });
     }
   };
-
-  const openDeleteModal = (commentId) => {
+  const openDeleteModal = (commentId: number) => {
     setSelectedCommentId(commentId);
     setDeleteModalVisible(true);
   };
@@ -135,10 +131,10 @@ const Post = () => {
   };
 
   useEffect(() => {
-    const handleOutsideClick = (event) => {
+    const handleOutsideClick = (event: MouseEvent) => {
       if (
         deleteModalRef.current &&
-        !deleteModalRef.current.contains(event.target)
+        !deleteModalRef.current.contains(event.target as Node)
       ) {
         setDeleteModalVisible(false);
         setSelectedCommentId(null);
@@ -157,7 +153,7 @@ const Post = () => {
     };
   }, []);
 
-  const handleCommentClick = (postId) => {
+  const handleCommentClick = (postId: number | string) => {
     setActivePostId((prevPostId) => (prevPostId === postId ? null : postId));
   };
 
@@ -202,7 +198,7 @@ const Post = () => {
     }
   };
 
-  const searchs = (posts) => {
+  const searchs = (posts: Posts[]) => {
     return posts.filter(
       (post: Posts) =>
         post.name.toLowerCase().includes(search?.toLowerCase()) ||
@@ -230,8 +226,8 @@ const Post = () => {
       </div>
       <hr />
       <hr />
-      {posts.length > 0 ? (
-        posts.map((post: Posts) => {
+      {filteredPosts.length > 0 ? (
+        filteredPosts.map((post: Posts) => {
           return (
             <div key={post.id}>
               <div>

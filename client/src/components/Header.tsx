@@ -11,8 +11,8 @@ import { WechatOutlined } from "@ant-design/icons";
 const Title = () => {
   const [showSetting, setshowSetting] = useState(false);
   const [showChatList, setshowChatList] = useState(false);
-  const Setting = useRef<HTMLDivElement | null>(null); // Specify the type here
-  const ChatList = useRef<HTMLDivElement | null>(null); // Specify the type here
+  const Setting = useRef<HTMLDivElement | null>(null);
+  const ChatList = useRef<HTMLDivElement | null>(null);
   const user = useSelector((state: RootState) => state.user.user);
   const [contacts, setContacts] = useState([]);
   const [activeChats, setActiveChats] = useState([]);

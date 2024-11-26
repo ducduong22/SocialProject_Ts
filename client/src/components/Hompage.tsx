@@ -31,10 +31,7 @@ const HomePage = () => {
   const [showMainPost, setShowMainPost] = useState(true);
   const [filteredPosts, setFilteredPosts] = useState([]);
   const visibleGroups = showMore ? groups : groups.slice(0, 3);
-
-  console.log(user);
   const dispatch = useDispatch();
-
   const [join, setJoin] = useState(
     groups.reduce(
       (acc, group) => ({ ...acc, [group.id]: group.statusJoin }),
@@ -42,10 +39,11 @@ const HomePage = () => {
     )
   );
 
-  const handleSearchChange = (e) => {
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setInput(value);
     dispatch(setSearch(value));
+
     if (value) {
       const filtered = posts.filter(
         (post) =>
@@ -58,7 +56,7 @@ const HomePage = () => {
     }
   };
 
-  const handleSuggestionClick = (text) => {
+  const handleSuggestionClick = (text: string) => {
     setInput(text);
     dispatch(setSearch(text));
     setFilteredPosts([]);
@@ -70,7 +68,7 @@ const HomePage = () => {
     dispatch(setSearch(""));
   };
 
-  const handleMenuClick = (menu) => {
+  const handleMenuClick = (menu: string) => {
     setOpenMenu(openMenu === menu ? null : menu);
   };
 
@@ -78,7 +76,7 @@ const HomePage = () => {
     setShowMore(!showMore);
   };
 
-  const handleSelect = (id) => {
+  const handleSelect = (id: number) => {
     setJoin((prevJoin) => {
       const updatedJoin = { ...prevJoin, [id]: !prevJoin[id] };
       return updatedJoin;
@@ -88,7 +86,7 @@ const HomePage = () => {
     posts.reduce((acc, fren) => ({ ...acc, [fren.id]: fren.friendstatus }), {})
   );
 
-  const handleSelectFren = (id) => {
+  const handleSelectFren = (id: string) => {
     setfren((prevAdd) => {
       const updatedAdd = { ...prevAdd, [id]: !prevAdd[id] };
       return updatedAdd;
@@ -109,7 +107,7 @@ const HomePage = () => {
     }
   };
 
-  const handleButtonClick = (post) => {
+  const handleButtonClick = (post: string) => {
     setSelectedPost(post);
     setShowMainPost(false);
   };
@@ -135,7 +133,7 @@ const HomePage = () => {
     fetchContacts();
   }, [user._id]);
 
-  const handleContactClick = (contactId) => {
+  const handleContactClick = (contactId: string) => {
     const chatExists = activeChats.some((chat) => chat.id === contactId);
 
     if (!chatExists) {
@@ -146,17 +144,17 @@ const HomePage = () => {
     }
   };
 
-  const handleCloseChat = (contactId) => {
+  const handleCloseChat = (contactId: string) => {
     setActiveChats((prevChats) =>
       prevChats.filter((chat) => chat.id !== contactId)
     );
   };
 
   const navigate = useNavigate();
-  const handleUserClick = (userId) => {
+  const handleUserClick = (userId: number) => {
     navigate(`/user/${userId}`);
   };
-  const handleProfileClick = (userId) => {
+  const handleProfileClick = (userId: number) => {
     navigate(`/profile-page/${user.name}/${userId}`);
   };
 

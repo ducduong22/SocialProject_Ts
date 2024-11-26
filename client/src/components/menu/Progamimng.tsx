@@ -2,15 +2,22 @@ import { useSelector, useDispatch } from "react-redux";
 import { HeartFilled } from "@ant-design/icons";
 import { useEffect, useState } from "react";
 import { Pro, setProgramming } from "../../store/menu/ProgrammingSlice";
+import { Posts, ToggleLike } from "@/container/type";
 const Programming = () => {
   const dispatch = useDispatch();
 
   const pro = useSelector(Pro);
   console.log(pro);
   const [likeStatus, setLikeStatus] = useState(
-    pro.reduce((acc, tech) => ({ ...acc, [pro.id]: tech.handlelike }), {})
+    pro?.reduce(
+      (acc, tech) => ({
+        ...acc,
+        [tech.id]: tech.handlelike,
+      }),
+      {}
+    )
   );
-  const handleLikeClick = (postId) => {
+  const handleLikeClick = (postId: number | string) => {
     setLikeStatus((Status) => {
       const newLikeStatus = {
         ...Status,
@@ -30,7 +37,7 @@ const Programming = () => {
 
   return (
     <div>
-      {pro.length > 0 ? (
+      {pro?.length > 0 ? (
         pro.map((tech) => {
           return (
             <div key={tech.id}>

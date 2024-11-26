@@ -56,7 +56,7 @@ export const postSlice = createSlice({
       state.posts.push(action.payload);
       state.loading = false;
     },
-    deletePostRequest: (state) => {
+    deletePostRequest: (state, action: PayloadAction<string | Number>) => {
       state.loading = true;
     },
     deletePostSuccess: (state, action: PayloadAction<number>) => {

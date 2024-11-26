@@ -21,10 +21,10 @@ const LoginPage: React.FC = () => {
       const email = user.email;
       const password = user.password;
       dispatch(loginRequest({ email, password }));
-      setStatus("Login successful! Redirecting to homepage..."); // Success message
+      setStatus("Login successful! Redirecting to homepage...");
       setTimeout(() => {
         navigate("/homepage");
-      }, 2000); // Redirect after 2 seconds
+      }, 2000);
     } catch (error) {
       setStatus("Login failed. Please try again.");
     }

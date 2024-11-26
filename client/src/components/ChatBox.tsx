@@ -4,7 +4,7 @@ import axios from "axios";
 const ChatBox = ({ senderId, receiverId }) => {
   const [message, setMessage] = useState("");
 
-  const handleKeyPress = (e) => {
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       handleSendMessage();
