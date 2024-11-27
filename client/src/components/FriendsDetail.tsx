@@ -72,7 +72,7 @@ const PostDetail = () => {
     posts.reduce((acc, fren) => ({ ...acc, [fren.id]: fren.friendstatus }), {})
   );
 
-  const handleSelectFren = (id: string) => {
+  const handleSelectFren = (id: string | number) => {
     setfren((prevAdd) => {
       const updatedAdd = { ...prevAdd, [id]: !prevAdd[id] };
       console.log(`add ID ${id} add status:`, updatedAdd[id]);
