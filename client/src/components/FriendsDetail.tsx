@@ -20,7 +20,7 @@ const PostDetail = () => {
   const user = useSelector((state: RootState) => state.user.user);
   const posts = useSelector((state: RootState) => state.post.posts);
   const userPosts = posts.filter((post) => post.userId === Number(userId));
-  const getUserId = getUserIds.filter((u) => u.userId === Number(userId));
+  const getUserId = getUserIds.filter((u) => u.userId === String(userId));
   const [showFriends, setShowFriends] = useState(false);
   const [likedPosts, setLikedPosts] = useState<Record<string, boolean>>({});
   const [likeStatus, setLikeStatus] = useState(

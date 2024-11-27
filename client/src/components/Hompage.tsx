@@ -151,10 +151,10 @@ const HomePage = () => {
   };
 
   const navigate = useNavigate();
-  const handleUserClick = (userId: number) => {
+  const handleUserClick = (userId: string) => {
     navigate(`/user/${userId}`);
   };
-  const handleProfileClick = (userId: number) => {
+  const handleProfileClick = (userId: string) => {
     navigate(`/profile-page/${user.name}/${userId}`);
   };
 
