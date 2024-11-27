@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Posts, Comment } from "@/container/type";
+import { Posts, Comment, postData } from "@/container/type";
 // Import các mock data
 import {
   mockPost,
@@ -29,11 +29,10 @@ export const getPost = async (): Promise<Posts[]> => {
 };
 
 // Thêm bài viết mới
-export const addPost = async (post: Omit<Posts, "id">): Promise<Posts> => {
+export const addPost = async (post: postData) => {
   const response = await axios.post(apiUrl.getPosts, post);
   return response.data;
 };
-
 // Xóa bài viết
 export const deletePost = async (id: number): Promise<void> => {
   await axios.delete(`${apiUrl.getPosts}/${id}`);
@@ -85,19 +84,5 @@ export const getTechNews = async (): Promise<typeof mockTechNews> => {
 export const getGroup = async (): Promise<typeof mockGroup> => {
   return mockGroup;
 };
-
-// // Lấy chi tiết bài viết
-// export const getPostDetailAPI = async (userId: string): Promise<Posts> => {
-//   const postdetail = mockPost.find((p) => p.id === Number(userId));
-
-//   console.log("ID tìm kiếm:", userId);
-
-//   if (!postdetail) {
-//     throw new Error("Post not found");
-//   }
-
-//   console.log(postdetail);
-//   return postdetail;
-// };
 
 export default apiUrl;

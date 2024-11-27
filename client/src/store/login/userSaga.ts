@@ -8,18 +8,7 @@ import {
   registerFailure,
 } from "./userSlice";
 import axios, { AxiosResponse } from "axios";
-import { User, Register } from "../../container/type";
-
-// Define types for login and register payloads
-
-interface ApiResponse {
-  user: {
-    _id: string;
-    name: string;
-    email: string;
-  };
-  token: string;
-}
+import { User, Register, ApiResponse } from "../../container/type";
 
 // API calls
 const loginApi = (credentials: User) =>
@@ -28,13 +17,10 @@ const loginApi = (credentials: User) =>
 const registerApi = (userData: Register) =>
   axios.post<ApiResponse>("http://localhost:3002/register", userData);
 
-// Worker Sagas
 function* handleLogin(action: { type: string; payload: User }) {
-  // Define the condition that needs to be met for login to proceed
-  const isConditionMet = true; // Replace `true` with your actual condition logic
+  const isConditionMet = true;
 
   if (!isConditionMet) {
-    // If the condition is not met, exit the saga early
     yield put(loginFailure("Condition not met for login"));
     return;
   }
@@ -57,7 +43,7 @@ function* handleRegister(action: { type: string; payload: Register }) {
       registerApi,
       action.payload
     );
-    yield put(registerSuccess(response.data.token));
+    yield put(registerSuccess(response.data));
     // Save token to localStorage
     localStorage.setItem("token", response.data.token);
   } catch (error: any) {

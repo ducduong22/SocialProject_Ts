@@ -2,7 +2,7 @@ export interface Register {
   email: string;
   password: string;
   name: string;
-  userId: number;
+  userId: string;
 }
 //pick chọn các thuộc tính
 export interface Login extends Pick<Register, "name" | "email" | "password"> {}
@@ -10,6 +10,7 @@ export interface Login extends Pick<Register, "name" | "email" | "password"> {}
 export interface User extends Omit<Register, "password"> {
   _id: string;
   avatar?: string;
+  userId: string;
 }
 
 export interface UserId extends Omit<User, "email" | "password" | "_id"> {
@@ -18,12 +19,17 @@ export interface UserId extends Omit<User, "email" | "password" | "_id"> {
 }
 
 export interface ApiResponse {
-  user: User;
+  user: {
+    _id: string;
+    name: string;
+    email: string;
+    userId: string;
+  };
   token: string;
 }
 
 export interface Posts {
-  userId: string;
+  userId: number;
   id: string | number;
   name: string;
   datepost: string;
