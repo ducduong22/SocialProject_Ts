@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Posts, ToggleLike } from "../../container/type";
+import { StringExpression } from "mongoose";
 
 interface PostState {
   posts: Posts[];
@@ -59,7 +60,7 @@ export const postSlice = createSlice({
     deletePostRequest: (state, action: PayloadAction<string | Number>) => {
       state.loading = true;
     },
-    deletePostSuccess: (state, action: PayloadAction<number>) => {
+    deletePostSuccess: (state, action: PayloadAction<StringExpression>) => {
       state.posts = state.posts.filter((post) => post.id !== action.payload);
       state.loading = false;
     },

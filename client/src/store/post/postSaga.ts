@@ -35,7 +35,7 @@ function* addNewPost(action: PayloadAction<postData>) {
 }
 
 // Worker saga for deleting a post
-function* removePost(action: PayloadAction<number>) {
+function* removePost(action: PayloadAction<string>) {
   try {
     yield call(deletePost, action.payload);
     yield put(deletePostSuccess(action.payload));

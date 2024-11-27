@@ -16,6 +16,7 @@ const PostDetail = () => {
   const [activePostId, setActivePostId] = useState<string | number | null>(
     null
   );
+  const comments = useSelector((state: RootState) => state.comment.comments);
   const getUserIds = useSelector((state: RootState) => state.userId.userID);
   const user = useSelector((state: RootState) => state.user.user);
   const posts = useSelector((state: RootState) => state.post.posts);
@@ -72,10 +73,9 @@ const PostDetail = () => {
     posts.reduce((acc, fren) => ({ ...acc, [fren.id]: fren.friendstatus }), {})
   );
 
-  const handleSelectFren = (id: string | number) => {
+  const handleSelectFren = (id: string) => {
     setfren((prevAdd) => {
       const updatedAdd = { ...prevAdd, [id]: !prevAdd[id] };
-      console.log(`add ID ${id} add status:`, updatedAdd[id]);
       return updatedAdd;
     });
   };
@@ -226,7 +226,7 @@ const PostDetail = () => {
                         {/*---------------------------------------------------------------------------*/}
                         {activePostId === post.id && (
                           <div className="comments-section">
-                            {mockComments
+                            {comments
                               .filter((comment) => comment.postId == post.id)
                               .map((comment) => (
                                 <div className="row" key={comment.id}>

@@ -30,7 +30,7 @@ export interface ApiResponse {
 
 export interface Posts {
   userId: number;
-  id: string | number;
+  id: string;
   name: string;
   datepost: string;
   avatar: string;
@@ -94,7 +94,7 @@ export interface Comment {
 
 export interface Group {
   GroupId: number;
-  id: number | number;
+  id: number;
   name: string;
   avatar: string;
   coverimage: string;

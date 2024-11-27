@@ -32,6 +32,7 @@ const ProfilePage = () => {
   const [activePostId, setActivePostId] = useState<string | number | null>(
     null
   );
+  const comments = useSelector((state: RootState) => state.comment.comments);
   const posts = useSelector((state: RootState) => state.post.posts);
   const [likedPosts, setLikedPosts] = useState<Record<string, boolean>>({});
   const [likeStatus, setLikeStatus] = useState(
@@ -73,7 +74,7 @@ const ProfilePage = () => {
     dispatch(setPosts());
   }, [dispatch]);
 
-  const userPosts = posts.filter((post) => post.userId == String(user._id));
+  const userPosts = posts.filter((post) => post.userId === Number(user._id));
   console.log(userPosts);
   console.log("user nè ", user);
   console.log("post nè", posts);
@@ -222,7 +223,7 @@ const ProfilePage = () => {
                       {/*---------------------------------------------------------------------------*/}
                       {activePostId === post.id && (
                         <div className="comments-section">
-                          {mockComments
+                          {comments
                             .filter((comment) => comment.postId === post.id)
                             .map((comment) => (
                               <div className="row" key={comment.id}>

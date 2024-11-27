@@ -34,7 +34,7 @@ export const addPost = async (post: postData) => {
   return response.data;
 };
 // Xóa bài viết
-export const deletePost = async (id: number): Promise<void> => {
+export const deletePost = async (id: string): Promise<void> => {
   await axios.delete(`${apiUrl.getPosts}/${id}`);
 };
 
