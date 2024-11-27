@@ -24,12 +24,12 @@ nav .Left .Logo Img {
   cursor: pointer;
 }
 
-nav .Left {
+/* nav .Left {
   display: flex;
   align-items: center;
   justify-content: start;
   margin-left: 10px;
-}
+} */
 
 .search_bar {
   width: 530px;
